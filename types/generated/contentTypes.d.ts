@@ -580,6 +580,34 @@ export interface ApiRegistrationRegistration
   };
 }
 
+export interface ApiWaitlistWaitlist extends Struct.CollectionTypeSchema {
+  collectionName: 'waitlists';
+  info: {
+    displayName: 'Waitlist';
+    pluralName: 'waitlists';
+    singularName: 'waitlist';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::waitlist.waitlist'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiWallLoreWallLore extends Struct.CollectionTypeSchema {
   collectionName: 'wall_lores';
   info: {
@@ -1136,6 +1164,7 @@ declare module '@strapi/strapi' {
       'api::challenge.challenge': ApiChallengeChallenge;
       'api::contact.contact': ApiContactContact;
       'api::registration.registration': ApiRegistrationRegistration;
+      'api::waitlist.waitlist': ApiWaitlistWaitlist;
       'api::wall-lore.wall-lore': ApiWallLoreWallLore;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
